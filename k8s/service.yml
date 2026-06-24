@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: postgres-service
+  namespace: devboard
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+
+---
+
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: backend-service
+  namespace: devboard
+spec:
+  type: NodePort
+  selector:
+    app: backend-devboard
+  ports:
+    - port: 8081
+      targetPort: 8081
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend-service
+  namespace: devboard
+spec:
+  type: NodePort
+  selector:
+    app: frontend-devboard
+  ports:
+    - port: 4173
+      targetPort: 4173

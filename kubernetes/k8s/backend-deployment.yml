@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: backend-deployment
+  namespace: devboard
+  labels:
+    app: backend-devboard
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-devboard
+  template:
+    metadata:
+      labels:
+        app: backend-devboard
+    spec:
+      containers:
+        - name: backend
+          image: fahadjaseem/backend-devboard:v1
+          ports:
+          - containerPort: 8081
+
+          envFrom:
+          - configMapRef:
+              name: devboard-configmap
+          - secretRef:
+              name: secret-devboard
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 20
+

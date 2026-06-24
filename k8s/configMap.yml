@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: devboard-configmap
+  namespace: devboard
+
+data:
+  PORT: "8081"
+  POSTGRES_USER: "devboard"
+  POSTGRES_DB: "devboard"
+  POSTGRES_URL: "postgres://devboard:devboard@postgres-service:5432/devboard?sslmode=disable"
+
+
+
+
